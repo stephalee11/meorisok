@@ -13,3 +13,10 @@ export type Task = {
   url: string; // link back to the Notion page
   editedAt: string; // ISO datetime (Notion last_edited_time), used for the Enjoyed 14-day window
 };
+
+/** What the server hands the app: tasks plus which sources failed to load. */
+export type TasksPayload = {
+  tasks: Task[];
+  failed: { id: string; label: string }[];
+  fetchedAt: number; // epoch ms
+};

@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useState } from "react";
 import type { SourceMeta } from "@/lib/sources";
-import type { StatusKey, Task } from "@/lib/types";
+import type { StatusKey, Task, TasksPayload } from "@/lib/types";
 import { useToast } from "./Toast";
 
 export const ERROR_COPY = "couldn't reach notion. try again in a sec.";
@@ -21,6 +21,8 @@ type TasksContextValue = {
   landed: { id: string; n: number; at: number } | null;
   /** Bumps when something moves to Enjoyed; drives the mascot bounce. */
   celebrate: number;
+  /** Sources that didn't load on the last fetch. */
+  failed: TasksPayload["failed"];
 };
 
 const TasksContext = createContext<TasksContextValue | null>(null);
@@ -40,8 +42,9 @@ type Props = {
   /** Persist a status change. Throw to roll back. Omit for local-only (demo). */
   write?: (task: Task, next: StatusKey) => Promise<Partial<Task> | void>;
   /** Fetch fresh tasks. Omit for demo. */
-  reload?: () => Promise<Task[]>;
+  reload?: () => Promise<TasksPayload>;
   initialUpdatedAt: number;
+  initialFailed?: TasksPayload["failed"];
   children: React.ReactNode;
 };
 
@@ -54,6 +57,7 @@ export function TasksProvider({
   write,
   reload,
   initialUpdatedAt,
+  initialFailed = [],
   children,
 }: Props) {
   const toast = useToast();
@@ -62,6 +66,7 @@ export function TasksProvider({
   const [updatedAt, setUpdatedAt] = useState(initialUpdatedAt);
   const [landed, setLanded] = useState<TasksContextValue["landed"]>(null);
   const [celebrate, setCelebrate] = useState(0);
+  const [failed, setFailed] = useState(initialFailed);
 
   const patch = (id: string, p: Partial<Task>) =>
     setTasks((xs) => xs.map((t) => (t.id === id ? { ...t, ...p } : t)));
@@ -91,9 +96,15 @@ export function TasksProvider({
   const refresh = useCallback(async () => {
     setRefreshing(true);
     try {
-      if (reload) setTasks(await reload());
-      else await new Promise((r) => setTimeout(r, 450)); // demo: just feel like a fetch
-      setUpdatedAt(Date.now());
+      if (reload) {
+        const fresh = await reload();
+        setTasks(fresh.tasks);
+        setFailed(fresh.failed);
+        setUpdatedAt(fresh.fetchedAt);
+      } else {
+        await new Promise((r) => setTimeout(r, 450)); // demo: just feel like a fetch
+        setUpdatedAt(Date.now());
+      }
     } catch {
       toast(ERROR_COPY, "error");
     } finally {
@@ -103,7 +114,7 @@ export function TasksProvider({
 
   return (
     <TasksContext.Provider
-      value={{ tasks, sources, today, basePath, mode, setStatus, refresh, refreshing, updatedAt, landed, celebrate }}
+      value={{ tasks, sources, today, basePath, mode, setStatus, refresh, refreshing, updatedAt, landed, celebrate, failed }}
     >
       {children}
     </TasksContext.Provider>

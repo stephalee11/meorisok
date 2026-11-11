@@ -9,7 +9,7 @@ import { useTasks } from "./TasksContext";
 import { ViewTabs } from "./ViewTabs";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
-  const { basePath, mode, refresh, refreshing, updatedAt, celebrate } = useTasks();
+  const { basePath, mode, refresh, refreshing, updatedAt, celebrate, failed } = useTasks();
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-6xl flex-col px-4 sm:px-6">
@@ -46,6 +46,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </Button>
         </div>
       </header>
+
+      {failed.length > 0 && (
+        <div role="alert" className="mb-4 flex flex-col gap-1 rounded-card bg-butter-300 px-4 py-2 text-sm font-semibold text-cocoa-900">
+          {failed.map((f) => (
+            <p key={f.id}>{f.label} didn&apos;t load. try refresh in a sec.</p>
+          ))}
+        </div>
+      )}
 
       <ViewTabs basePath={basePath} />
 
