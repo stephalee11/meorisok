@@ -23,7 +23,7 @@ export function Section({
 export function Specimen({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-3 rounded-panel border border-cream-200 bg-cream-50 p-4">
-      <p className="text-xs font-bold uppercase tracking-wide text-cocoa-500">{label}</p>
+      <p className="text-xs font-bold tracking-wide text-cocoa-500">{label}</p>
       <div className="flex flex-wrap items-center gap-3">{children}</div>
     </div>
   );

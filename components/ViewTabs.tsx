@@ -4,9 +4,9 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
 const VIEWS = [
-  { slug: "today", label: "Today" },
-  { slug: "week", label: "This Week" },
-  { slug: "board", label: "Board" },
+  { slug: "today", label: "today" },
+  { slug: "week", label: "this week" },
+  { slug: "board", label: "board" },
 ];
 
 /** Tabs are links so each view has its own URL. Filters ride along in the query string. */

@@ -1,5 +1,5 @@
 import type { Ref } from "react";
-import { STATUS_DOT } from "./StatusMenu";
+import { STATUS_DOT } from "@/lib/status";
 import type { StatusKey } from "@/lib/types";
 
 type Props = {

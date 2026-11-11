@@ -12,12 +12,12 @@ export const metadata: Metadata = {
 };
 
 const NAV = [
-  ["color", "Color"],
-  ["contrast", "Contrast"],
-  ["type", "Type"],
-  ["shape", "Shape and space"],
-  ["motion", "Motion"],
-  ["components", "Components"],
+  ["color", "color"],
+  ["contrast", "contrast"],
+  ["type", "type"],
+  ["shape", "shape and space"],
+  ["motion", "motion"],
+  ["components", "components"],
 ];
 
 export default function DesignPage() {
@@ -28,8 +28,8 @@ export default function DesignPage() {
         <div>
           <h1 className="font-display text-2xl font-bold text-cocoa-900">meorisok design system</h1>
           <p className="text-cocoa-500">
-            Strawberry milk, cream, and cocoa. Tasks are order tickets.{" "}
-            <Link href="/demo">Try the demo</Link>
+            strawberry milk, cream, and cocoa. tasks are order tickets.{" "}
+            <Link href="/demo">try the demo</Link>
           </p>
         </div>
       </header>
@@ -46,7 +46,7 @@ export default function DesignPage() {
         ))}
       </nav>
 
-      <Section id="color" title="Color" intro="Defined once in app/tokens.css as CSS variables, then mapped into Tailwind.">
+      <Section id="color" title="color" intro="Defined once in app/tokens.css as CSS variables, then mapped into Tailwind.">
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {COLORS.map((c) => (
             <li key={c.token} className="overflow-hidden rounded-card border border-cream-200 bg-cream-50">
@@ -56,7 +56,7 @@ export default function DesignPage() {
                 <p className="font-mono text-sm text-cocoa-700">{c.hex}</p>
                 {"was" in c && (
                   <p className="text-xs text-cocoa-500">
-                    was <s>{c.was}</s>, darkened for AA
+                    was <s>{c.was}</s>, darkened for aa
                   </p>
                 )}
                 <p className="mt-1 text-sm text-cocoa-500">{c.use}</p>
@@ -68,17 +68,17 @@ export default function DesignPage() {
 
       <Section
         id="contrast"
-        title="Contrast"
+        title="contrast"
         intro="Every text color on every background it sits on. Body text needs 4.5:1 (WCAG AA). Ratios are computed from the hexes above when this page builds."
       >
         <div className="overflow-x-auto rounded-card border border-cream-200">
           <table className="w-full min-w-[520px] text-left text-sm">
             <thead className="bg-cream-100 text-cocoa-700">
               <tr>
-                <th scope="col" className="p-3">Sample</th>
-                <th scope="col" className="p-3">Text / background</th>
-                <th scope="col" className="p-3">Used for</th>
-                <th scope="col" className="p-3 text-right">Ratio</th>
+                <th scope="col" className="p-3">sample</th>
+                <th scope="col" className="p-3">text / background</th>
+                <th scope="col" className="p-3">used for</th>
+                <th scope="col" className="p-3 text-right">ratio</th>
               </tr>
             </thead>
             <tbody>
@@ -106,7 +106,7 @@ export default function DesignPage() {
                           pass ? "bg-matcha-400 text-cocoa-900" : "bg-butter-300 text-cocoa-900"
                         }`}
                       >
-                        {pass ? "AA" : "fails"}
+                        {pass ? "aa" : "fails"}
                       </span>
                     </td>
                   </tr>
@@ -122,7 +122,7 @@ export default function DesignPage() {
         </p>
       </Section>
 
-      <Section id="type" title="Type" intro="Fraunces for headings (600-700), Nunito for everything else (400-700). Loaded with next/font.">
+      <Section id="type" title="type" intro="Fraunces for headings (600-700), Nunito for everything else (400-700). Loaded with next/font.">
         <ul className="flex flex-col gap-4">
           {TYPE_SCALE.map((t) => (
             <li key={t.px} className="flex flex-wrap items-baseline gap-x-6 gap-y-1">
@@ -140,10 +140,10 @@ export default function DesignPage() {
         </ul>
       </Section>
 
-      <Section id="shape" title="Shape and space">
+      <Section id="shape" title="shape and space">
         <div className="grid gap-8 md:grid-cols-3">
           <div>
-            <h3 className="mb-3 font-bold text-cocoa-700">Radius</h3>
+            <h3 className="mb-3 font-bold text-cocoa-700">radius</h3>
             <ul className="flex flex-col gap-3">
               {RADII.map((r) => (
                 <li key={r.name} className="flex items-center gap-3">
@@ -159,7 +159,7 @@ export default function DesignPage() {
             </ul>
           </div>
           <div>
-            <h3 className="mb-3 font-bold text-cocoa-700">Spacing (4px base)</h3>
+            <h3 className="mb-3 font-bold text-cocoa-700">spacing (4px base)</h3>
             <ul className="flex flex-col gap-2">
               {SPACING.map((s) => (
                 <li key={s} className="flex items-center gap-3 text-sm">
@@ -170,13 +170,13 @@ export default function DesignPage() {
             </ul>
           </div>
           <div>
-            <h3 className="mb-3 font-bold text-cocoa-700">Shadow</h3>
+            <h3 className="mb-3 font-bold text-cocoa-700">shadow</h3>
             <div className="rounded-card bg-cream-100 p-4 shadow-sticker">
-              <p className="text-sm font-semibold">Sticker shadow</p>
+              <p className="text-sm font-semibold">sticker shadow</p>
               <p className="font-mono text-xs text-cocoa-500">0 2px 0 cream-200 + faint blur</p>
             </div>
             <div className="mt-4 rounded-card bg-cream-100 p-4 shadow-lift">
-              <p className="text-sm font-semibold">Lift (while dragging)</p>
+              <p className="text-sm font-semibold">lift (while dragging)</p>
             </div>
           </div>
         </div>
@@ -184,7 +184,7 @@ export default function DesignPage() {
 
       <Section
         id="motion"
-        title="Motion"
+        title="motion"
         intro="150-200ms ease-out for hover and drag. Tickets slide onto the pass when they land in a column. The mascot does a small bounce when something is enjoyed. All of it switches off with prefers-reduced-motion."
       >
         <div className="flex flex-wrap gap-6 text-sm text-cocoa-700">

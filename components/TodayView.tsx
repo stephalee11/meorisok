@@ -22,7 +22,11 @@ export function TodayView() {
   return (
     <section aria-labelledby="view-title" className="mx-auto max-w-2xl">
       <div id="view-title">
-        <ViewHeader title="Today" subtitle={longDate.format(new Date(y, m - 1, d))} count={shown.length} />
+        <ViewHeader
+          title="today"
+          subtitle={longDate.format(new Date(y, m - 1, d)).toLowerCase()}
+          count={shown.length}
+        />
       </div>
       {inView.length > 0 && (
         <div className="mb-6">
@@ -30,7 +34,7 @@ export function TodayView() {
         </div>
       )}
       {inView.length === 0 ? (
-        <EmptyState title="Nothing on the stove." body="Go get a snack." />
+        <EmptyState title="nothing on the stove." body="go get a snack." />
       ) : shown.length === 0 ? (
         <NoMatches onClear={() => setFilters(EMPTY_FILTERS)} />
       ) : (

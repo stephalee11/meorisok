@@ -31,17 +31,17 @@ import { useFilters } from "./useFilters";
 import { ViewHeader } from "./ViewHeader";
 
 const HINT: Record<StatusKey, string> = {
-  backlog: "Someday",
-  this_week: "This week",
-  doing: "In progress",
-  done: `Last ${ENJOYED_WINDOW_DAYS} days`,
+  backlog: "someday",
+  this_week: "this week",
+  doing: "in progress",
+  done: `last ${ENJOYED_WINDOW_DAYS} days`,
 };
 
 const EMPTY_COPY: Record<StatusKey, string> = {
-  backlog: "Menu's empty.",
-  this_week: "No orders yet.",
-  doing: "Nothing brewing.",
-  done: "Nothing enjoyed yet.",
+  backlog: "menu's empty.",
+  this_week: "no orders yet.",
+  doing: "nothing brewing.",
+  done: "nothing enjoyed yet.",
 };
 
 /** Arrow keys jump a whole column instead of 25px. */
@@ -113,7 +113,7 @@ export function BoardView() {
   return (
     <section aria-labelledby="view-title">
       <div id="view-title">
-        <ViewHeader title="Board" subtitle="Drag a ticket to move it" />
+        <ViewHeader title="board" subtitle="drag a ticket to move it" />
       </div>
       {tasks.length > 0 && (
         <div className="mb-6">
@@ -121,7 +121,7 @@ export function BoardView() {
         </div>
       )}
       {tasks.length === 0 ? (
-        <EmptyState title="The cafe's quiet." body="No tickets anywhere yet." />
+        <EmptyState title="the cafe's quiet." body="no tickets anywhere yet." />
       ) : shown.length === 0 ? (
         <NoMatches onClear={() => setFilters(EMPTY_FILTERS)} />
       ) : (
@@ -149,7 +149,7 @@ export function BoardView() {
                   footer={
                     s.key === "done" && (hiddenDone > 0 || showAll) ? (
                       <Button variant="ghost" size="sm" onClick={() => setShowAll((v) => !v)}>
-                        {showAll ? `Only last ${ENJOYED_WINDOW_DAYS} days` : `Show all (${hiddenDone} older)`}
+                        {showAll ? `only last ${ENJOYED_WINDOW_DAYS} days` : `show all (${hiddenDone} older)`}
                       </Button>
                     ) : null
                   }

@@ -30,6 +30,8 @@ Down-to-earth, short, a little warm. No buzzwords. Examples:
 
 Keep UI text to plain direct verbs.
 
+All UI text is lowercase (headings, tabs, buttons, labels, empty states, toasts). Ticket content (task titles, project names, dates, priority, phase) keeps its own casing.
+
 ---
 
 ## The cafe metaphor
@@ -120,11 +122,11 @@ Handle pagination (databases can exceed 100 rows). Unknown status labels fall ba
 ### Filters (persist in URL query params)
 - Project chips (multi-select, uses the color for each source)
 - Priority (only shown if any visible task has one)
-- Phase (same rule)
 - Text search on title
+- On phones the filter bar folds behind a "filters" button with an active count
 
 ### Edit status back to Notion
-- On the Board: drag a ticket to another column. Elsewhere: a small status menu on each ticket plus a checkbox that moves it to Enjoyed.
+- On the Board: drag a ticket to another column (keyboard: the grip on each ticket). Everywhere: a checkbox that moves it to Enjoyed (unchecking moves it to Order Up). No status menu on tickets.
 - Optimistic update, then `PATCH` through a server route that updates the page's status property to the **exact Notion label** the source uses (e.g. `This Week` in Wander, `this week` in plumbob). Look up the label from the source's own schema, not a hardcoded string.
 - If the write fails, roll back the card and show the error copy.
 - Only status is editable. No other fields are writable in v1.

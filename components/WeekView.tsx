@@ -12,9 +12,9 @@ import { useFilters } from "./useFilters";
 import { ViewHeader } from "./ViewHeader";
 
 function groupLabel(g: DayGroup, today: string) {
-  if (g.key === "late") return "Late";
-  if (g.key === "nodate") return "No date yet";
-  return friendlyDate(g.date!, today);
+  if (g.key === "late") return "late";
+  if (g.key === "nodate") return "no date yet";
+  return friendlyDate(g.date!, today).toLowerCase();
 }
 
 export function WeekView() {
@@ -27,7 +27,7 @@ export function WeekView() {
   return (
     <section aria-labelledby="view-title" className="mx-auto max-w-2xl">
       <div id="view-title">
-        <ViewHeader title="This Week" subtitle="Orders up and anything due soon" count={shown.length} />
+        <ViewHeader title="this week" subtitle="orders up and anything due soon" count={shown.length} />
       </div>
       {inView.length > 0 && (
         <div className="mb-6">
@@ -35,7 +35,7 @@ export function WeekView() {
         </div>
       )}
       {inView.length === 0 ? (
-        <EmptyState title="Nothing ordered this week." body="Enjoy the quiet." />
+        <EmptyState title="nothing ordered this week." body="enjoy the quiet." />
       ) : shown.length === 0 ? (
         <NoMatches onClear={() => setFilters(EMPTY_FILTERS)} />
       ) : (

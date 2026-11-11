@@ -4,11 +4,11 @@ import { EmptyState } from "./EmptyState";
 export function NoMatches({ onClear }: { onClear: () => void }) {
   return (
     <EmptyState
-      title="No tickets match."
-      body="Try fewer filters."
+      title="no tickets match."
+      body="try fewer filters."
       action={
         <Button variant="secondary" size="sm" onClick={onClear}>
-          Clear filters
+          clear filters
         </Button>
       }
     />

@@ -17,7 +17,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-pill focus:bg-cocoa-900 focus:px-4 focus:py-2 focus:text-cream-50"
       >
-        Skip to tickets
+        skip to tickets
       </a>
       <header className="flex flex-wrap items-center gap-x-4 gap-y-3 pt-6 pb-4">
         <Link href={`${basePath}/today`} className="flex items-center gap-2 no-underline" aria-label="meorisok home">
@@ -26,7 +26,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </Link>
         {mode === "demo" && (
           <span className="rounded-pill bg-butter-300 px-2.5 py-0.5 text-xs font-bold text-cocoa-900">
-            Demo · changes stay in this tab
+            demo · changes stay in this tab
           </span>
         )}
         <div className="ml-auto flex items-center gap-3">
@@ -42,7 +42,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 strokeLinejoin="round"
               />
             </svg>
-            {refreshing ? "Refreshing" : "Refresh"}
+            {refreshing ? "refreshing" : "refresh"}
           </Button>
         </div>
       </header>
@@ -55,7 +55,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       <footer className="flex flex-wrap gap-x-4 gap-y-1 border-t border-cream-200 py-6 text-sm text-cocoa-500">
         <span>meorisok · a tiny cafe for your tasks</span>
-        <Link href="/design">Design system</Link>
+        <Link href="/design">design system</Link>
       </footer>
     </div>
   );
@@ -69,7 +69,7 @@ function UpdatedAgo({ at }: { at: number }) {
   }, []);
   return (
     <span className="text-sm text-cocoa-500" aria-live="polite">
-      Updated {timeAgo(at, Math.max(now, at))}
+      updated {timeAgo(at, Math.max(now, at))}
     </span>
   );
 }

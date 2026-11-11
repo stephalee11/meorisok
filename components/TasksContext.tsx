@@ -5,7 +5,7 @@ import type { SourceMeta } from "@/lib/sources";
 import type { StatusKey, Task } from "@/lib/types";
 import { useToast } from "./Toast";
 
-export const ERROR_COPY = "Couldn't reach Notion. Try again in a sec.";
+export const ERROR_COPY = "couldn't reach notion. try again in a sec.";
 
 type TasksContextValue = {
   tasks: Task[];

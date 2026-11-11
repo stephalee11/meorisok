@@ -8,7 +8,6 @@ import { EmptyState } from "@/components/EmptyState";
 import { FilterBar } from "@/components/FilterBar";
 import { Mascot } from "@/components/Mascot";
 import { SkeletonTicket } from "@/components/SkeletonTicket";
-import { StatusMenu } from "@/components/StatusMenu";
 import { TaskTicket } from "@/components/TaskTicket";
 import { Toast } from "@/components/Toast";
 import { ViewTabs } from "@/components/ViewTabs";
@@ -58,7 +57,6 @@ const SAMPLES: Task[] = [
 
 export function ComponentsShowcase() {
   const [tasks, setTasks] = useState(SAMPLES);
-  const [menuValue, setMenuValue] = useState<StatusKey>("doing");
   const [filters, setFilters] = useState(EMPTY_FILTERS);
   const [pressed, setPressed] = useState(true);
   const [bounce, setBounce] = useState(0);
@@ -69,17 +67,17 @@ export function ComponentsShowcase() {
   };
 
   return (
-    <Section id="components" title="Components" intro="The real components, with sample data. Everything here is interactive.">
+    <Section id="components" title="components" intro="The real components, with sample data. Everything here is interactive.">
       <div className="grid gap-4 lg:grid-cols-2">
-        <Specimen label="Button">
-          <Button>Refresh</Button>
-          <Button variant="secondary">Clear filters</Button>
-          <Button variant="ghost">Show all</Button>
-          <Button size="sm">Small</Button>
-          <Button disabled>Disabled</Button>
+        <Specimen label="button">
+          <Button>refresh</Button>
+          <Button variant="secondary">clear filters</Button>
+          <Button variant="ghost">show all</Button>
+          <Button size="sm">small</Button>
+          <Button disabled>disabled</Button>
         </Specimen>
 
-        <Specimen label="Chip: project, priority, phase">
+        <Specimen label="chip: project, priority, phase">
           {DEMO_SOURCES.map((s) => (
             <ProjectChip key={s.id} label={s.label} color={s.color} />
           ))}
@@ -90,7 +88,7 @@ export function ComponentsShowcase() {
           <PhaseChip phase="Build" />
         </Specimen>
 
-        <Specimen label="Filter chip (toggle)">
+        <Specimen label="filter chip (toggle)">
           <FilterChip pressed={pressed} onToggle={() => setPressed((p) => !p)} color="matcha">
             Thesis
           </FilterChip>
@@ -99,17 +97,13 @@ export function ComponentsShowcase() {
           </FilterChip>
         </Specimen>
 
-        <Specimen label="Status menu (arrow keys, Escape)">
-          <StatusMenu value={menuValue} onChange={setMenuValue} taskTitle="Sample ticket" />
-        </Specimen>
-
-        <Specimen label="View tabs">
+        <Specimen label="view tabs">
           <Suspense fallback={<div className="h-11 w-72 rounded-pill skeleton-bar" />}>
             <ViewTabs basePath="/demo" />
           </Suspense>
         </Specimen>
 
-        <Specimen label="Mascot (click for the happy bounce)">
+        <Specimen label="mascot (click for the happy bounce)">
           <button type="button" onClick={() => setBounce((b) => b + 1)} aria-label="Make the mascot bounce">
             <Mascot size={64} bounceKey={bounce} />
           </button>
@@ -121,8 +115,8 @@ export function ComponentsShowcase() {
 
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
         <div className="flex flex-col gap-3 rounded-panel border border-cream-200 bg-cream-50 p-4">
-          <p className="text-xs font-bold uppercase tracking-wide text-cocoa-500">
-            Task ticket (late, brewing, enjoyed)
+          <p className="text-xs font-bold tracking-wide text-cocoa-500">
+            task ticket (late, brewing, enjoyed)
           </p>
           {tasks.map((t) => (
             <TaskTicket
@@ -133,42 +127,42 @@ export function ComponentsShowcase() {
               onStatusChange={(s) => move(t.id, s)}
             />
           ))}
-          <p className="text-xs font-bold uppercase tracking-wide text-cocoa-500">Skeleton ticket</p>
+          <p className="text-xs font-bold tracking-wide text-cocoa-500">skeleton ticket</p>
           <SkeletonTicket />
         </div>
 
         <div className="flex flex-col gap-4">
-          <BoardColumn status="doing" label="Brewing" hint="In progress" count={1}>
+          <BoardColumn status="doing" label="brewing" hint="in progress" count={1}>
             <TaskTicket task={SAMPLES[1]} project={sourceMeta("garden", DEMO_SOURCES)} today={TODAY} />
           </BoardColumn>
-          <BoardColumn status="done" label="Enjoyed" hint="Last 14 days" count={0} isOver>
+          <BoardColumn status="done" label="enjoyed" hint="last 14 days" count={0} isOver>
             <p className="rounded-card border-2 border-dashed border-cream-200 px-3 py-6 text-center text-sm text-cocoa-500">
-              Drop here (column while hovered)
+              drop here (column while hovered)
             </p>
           </BoardColumn>
         </div>
       </div>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
-        <Specimen label="Filter bar">
+        <Specimen label="filter bar">
           <div className="w-full">
             <FilterBar tasks={tasks} sources={DEMO_SOURCES} filters={filters} onChange={setFilters} />
           </div>
         </Specimen>
-        <Specimen label="Toast">
-          <Toast message="Moved to Enjoyed." />
-          <Toast message="Couldn't reach Notion. Try again in a sec." tone="error" onClose={() => {}} />
+        <Specimen label="toast">
+          <Toast message="moved to enjoyed." />
+          <Toast message="couldn't reach notion. try again in a sec." tone="error" onClose={() => {}} />
         </Specimen>
       </div>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
-        <EmptyState title="Nothing on the stove." body="Go get a snack." />
+        <EmptyState title="nothing on the stove." body="go get a snack." />
         <EmptyState
-          title="No tickets match."
-          body="Try fewer filters."
+          title="no tickets match."
+          body="try fewer filters."
           action={
             <Button variant="secondary" size="sm">
-              Clear filters
+              clear filters
             </Button>
           }
         />

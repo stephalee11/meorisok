@@ -81,11 +81,10 @@ export function boardColumns(
 export type Filters = {
   projects: string[];
   priorities: Priority[];
-  phases: string[];
   q: string;
 };
 
-export const EMPTY_FILTERS: Filters = { projects: [], priorities: [], phases: [], q: "" };
+export const EMPTY_FILTERS: Filters = { projects: [], priorities: [], q: "" };
 
 const PRIORITIES: Priority[] = ["P1", "P2", "P3"];
 
@@ -97,7 +96,6 @@ export function readFilters(params: URLSearchParams): Filters {
   return {
     projects: list(params.get("project")),
     priorities: list(params.get("priority")).filter((p): p is Priority => PRIORITIES.includes(p as Priority)),
-    phases: list(params.get("phase")),
     q: params.get("q") ?? "",
   };
 }
@@ -107,34 +105,34 @@ export function writeFilters(params: URLSearchParams, f: Filters): URLSearchPara
   const set = (k: string, v: string) => (v ? next.set(k, v) : next.delete(k));
   set("project", f.projects.join(","));
   set("priority", f.priorities.join(","));
-  set("phase", f.phases.join(","));
   set("q", f.q);
   return next;
 }
 
 export function hasActiveFilters(f: Filters): boolean {
-  return f.projects.length + f.priorities.length + f.phases.length > 0 || f.q.trim() !== "";
+  return activeFilterCount(f) > 0;
 }
 
-/** What the priority / phase controls can offer, based on tasks in view after the project filter. */
+export function activeFilterCount(f: Filters): number {
+  return f.projects.length + f.priorities.length + (f.q.trim() ? 1 : 0);
+}
+
+/** Which priorities the priority control can offer, based on tasks in view after the project filter. */
 export function filterOptions(tasks: Task[], f: Filters) {
   const scoped = f.projects.length ? tasks.filter((t) => f.projects.includes(t.sourceId)) : tasks;
   const priorities = PRIORITIES.filter((p) => scoped.some((t) => t.priority === p));
-  const phases = [...new Set(scoped.map((t) => t.phase).filter((p): p is string => !!p))].sort();
-  return { priorities, phases };
+  return { priorities };
 }
 
-/** Priority / phase filters only apply while their control is shown. */
+/** The priority filter only applies while its control is shown. */
 export function applyFilters(tasks: Task[], f: Filters): Task[] {
   const opts = filterOptions(tasks, f);
   const priorities = f.priorities.filter((p) => opts.priorities.includes(p));
-  const phases = f.phases.filter((p) => opts.phases.includes(p));
   const q = f.q.trim().toLowerCase();
   return tasks.filter(
     (t) =>
       (!f.projects.length || f.projects.includes(t.sourceId)) &&
       (!priorities.length || (t.priority !== undefined && priorities.includes(t.priority))) &&
-      (!phases.length || (t.phase !== undefined && phases.includes(t.phase))) &&
       (!q || t.title.toLowerCase().includes(q)),
   );
 }

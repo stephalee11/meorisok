@@ -7,7 +7,6 @@ import { stopDrag } from "@/lib/stopDrag";
 import type { StatusKey, Task } from "@/lib/types";
 import { isLate } from "@/lib/views";
 import { PhaseChip, PriorityChip, ProjectChip } from "./Chip";
-import { StatusMenu } from "./StatusMenu";
 
 type Props = {
   task: Task;
@@ -45,7 +44,7 @@ export function TaskTicket({ task, project, today, onStatusChange, landed, lifte
       );
     }
     if (!document.activeElement || document.activeElement === document.body) {
-      el.querySelector<HTMLElement>('button[aria-haspopup="menu"]')?.focus();
+      el.querySelector<HTMLElement>('input[type="checkbox"]')?.focus();
     }
   }, [landedN, landedAt]);
 
@@ -59,8 +58,17 @@ export function TaskTicket({ task, project, today, onStatusChange, landed, lifte
               <input
                 type="checkbox"
                 checked={done}
-                onChange={(e) => onStatusChange(e.target.checked ? "done" : "this_week")}
-                aria-label={done ? `Move ${task.title} back to Order Up` : `Mark ${task.title} as enjoyed`}
+                onChange={(e) => {
+                  // If the ticket leaves the view, hand focus to its neighbour instead of the page.
+                  const all = [...document.querySelectorAll<HTMLInputElement>('article input[type="checkbox"]')];
+                  const i = all.indexOf(e.currentTarget);
+                  const neighbour = all[i + 1] ?? all[i - 1];
+                  onStatusChange(e.target.checked ? "done" : "this_week");
+                  requestAnimationFrame(() => {
+                    if (document.activeElement === document.body && neighbour?.isConnected) neighbour.focus();
+                  });
+                }}
+                aria-label={done ? `Move ${task.title} back to order up` : `Mark ${task.title} as enjoyed`}
                 className="peer size-5 cursor-pointer appearance-none rounded-full border-2 border-cocoa-500 bg-cream-50 transition-colors duration-150 ease-out hover:border-berry-600 checked:border-cocoa-700 checked:bg-matcha-400"
                 {...stopDrag}
               />
@@ -112,11 +120,6 @@ export function TaskTicket({ task, project, today, onStatusChange, landed, lifte
           )}
           {task.priority && <PriorityChip priority={task.priority} />}
           {task.phase && <PhaseChip phase={task.phase} />}
-          {onStatusChange && (
-            <div className="ml-auto pl-1">
-              <StatusMenu value={task.status} onChange={onStatusChange} taskTitle={task.title} />
-            </div>
-          )}
         </div>
       </article>
     </div>
