@@ -7,7 +7,7 @@ import { ShellSkeleton } from "@/components/ShellSkeleton";
 export const instant = false;
 
 export const metadata: Metadata = {
-  title: "meorisok demo",
+  title: { default: "demo", template: "%s · demo · meorisok" },
   description: "Try meorisok with fake tasks. Nothing leaves your browser.",
 };
 

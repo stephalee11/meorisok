@@ -7,7 +7,7 @@ import { ComponentsShowcase } from "./ComponentsShowcase";
 import { Section } from "./Section";
 
 export const metadata: Metadata = {
-  title: "meorisok design system",
+  title: "design system",
   description: "Tokens and components for meorisok, a cozy cafe for your tasks.",
 };
 

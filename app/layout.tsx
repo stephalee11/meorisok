@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Nunito } from "next/font/google";
 import "./globals.css";
 
@@ -14,9 +14,27 @@ const nunito = Nunito({
   weight: ["400", "600", "700"],
 });
 
+const site = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: "meorisok",
-  description: "All my Notion tasks in one cozy place.",
+  metadataBase: new URL(site),
+  title: { default: "meorisok", template: "%s · meorisok" },
+  description: "A tiny cafe for your Notion tasks. Every task is an order ticket.",
+  applicationName: "meorisok",
+  openGraph: {
+    title: "meorisok",
+    description: "A tiny cafe for your Notion tasks. Every task is an order ticket.",
+    url: "/demo",
+    siteName: "meorisok",
+    type: "website",
+  },
+  twitter: { card: "summary_large_image" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#FFF9F3",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

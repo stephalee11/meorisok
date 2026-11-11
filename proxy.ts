@@ -1,8 +1,14 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { isValidSession, SESSION_COOKIE } from "@/lib/session";
 
-/** Public: login, the demo, the design system, and the login API. Everything else needs the cookie. */
-const PUBLIC = [/^\/login$/, /^\/demo(\/.*)?$/, /^\/design$/, /^\/api\/login$/];
+/** Public: login, the demo, the design system, the login API, and generated icons. Everything else needs the cookie. */
+const PUBLIC = [
+  /^\/login$/,
+  /^\/demo(\/.*)?$/,
+  /^\/design$/,
+  /^\/api\/login$/,
+  /^\/(icon|apple-icon|opengraph-image)(\.\w+)?$/,
+];
 
 export async function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl;

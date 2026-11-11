@@ -5,12 +5,15 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { timeAgo } from "@/lib/dates";
 import { Button } from "./Button";
+import { EmptyState } from "./EmptyState";
 import { Mascot } from "./Mascot";
 import { useTasks } from "./TasksContext";
 import { ViewTabs } from "./ViewTabs";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
-  const { basePath, mode, refresh, refreshing, updatedAt, celebrate, failed } = useTasks();
+  const { basePath, mode, refresh, refreshing, updatedAt, celebrate, failed, sources } = useTasks();
+  // Nothing loaded at all: say so instead of showing a cheerful empty view.
+  const allFailed = failed.length > 0 && failed.length >= sources.length;
   const router = useRouter();
 
   return (
@@ -49,7 +52,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      {failed.length > 0 && (
+      {failed.length > 0 && !allFailed && (
         <div role="alert" className="mb-4 flex flex-col gap-1 rounded-card bg-butter-300 px-4 py-2 text-sm font-semibold text-cocoa-900">
           {failed.map((f) => (
             <p key={f.id}>{f.label} didn&apos;t load. try refresh in a sec.</p>
@@ -60,7 +63,21 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <ViewTabs basePath={basePath} />
 
       <main id="main" className="flex-1 py-6">
-        {children}
+        {allFailed ? (
+          <div role="alert">
+            <EmptyState
+              title="couldn't reach notion."
+              body="try again in a sec."
+              action={
+                <Button onClick={refresh} disabled={refreshing}>
+                  {refreshing ? "refreshing" : "try again"}
+                </Button>
+              }
+            />
+          </div>
+        ) : (
+          children
+        )}
       </main>
 
       <footer className="flex flex-wrap gap-x-4 gap-y-1 border-t border-cream-200 py-6 text-sm text-cocoa-500">
