@@ -6,6 +6,7 @@ import { Button } from "@/components/Button";
 import { FilterChip, PhaseChip, PriorityChip, ProjectChip } from "@/components/Chip";
 import { EmptyState } from "@/components/EmptyState";
 import { FilterBar } from "@/components/FilterBar";
+import { LoginCard } from "@/components/LoginCard";
 import { Mascot } from "@/components/Mascot";
 import { SkeletonTicket } from "@/components/SkeletonTicket";
 import { TaskTicket } from "@/components/TaskTicket";
@@ -152,6 +153,14 @@ export function ComponentsShowcase() {
         <Specimen label="toast">
           <Toast message="moved to enjoyed." />
           <Toast message="couldn't reach notion. try again in a sec." tone="error" onClose={() => {}} />
+        </Specimen>
+      </div>
+
+      <div className="mt-4">
+        <Specimen label="login card (any password shows the error state)">
+          <div className="flex w-full justify-center py-4">
+            <LoginCard onSubmit={async () => "that's not it. try again."} />
+          </div>
         </Specimen>
       </div>
 

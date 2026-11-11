@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { timeAgo } from "@/lib/dates";
 import { Button } from "./Button";
@@ -10,6 +11,7 @@ import { ViewTabs } from "./ViewTabs";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { basePath, mode, refresh, refreshing, updatedAt, celebrate, failed } = useTasks();
+  const router = useRouter();
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-6xl flex-col px-4 sm:px-6">
@@ -64,6 +66,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <footer className="flex flex-wrap gap-x-4 gap-y-1 border-t border-cream-200 py-6 text-sm text-cocoa-500">
         <span>meorisok · a tiny cafe for your tasks</span>
         <Link href="/design">design system</Link>
+        {mode === "live" && (
+          <button
+            type="button"
+            onClick={async () => {
+              await fetch("/api/logout", { method: "POST" }).catch(() => {});
+              router.replace("/login");
+            }}
+            className="ml-auto font-semibold text-berry-600 hover:underline"
+          >
+            log out
+          </button>
+        )}
       </footer>
     </div>
   );

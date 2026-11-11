@@ -143,7 +143,7 @@ Handle pagination (databases can exceed 100 rows). Unknown status labels fall ba
 ## Access and security
 
 - One password in env var `MEORISOK_PASSWORD`. Login page posts to a server route, which sets a signed, httpOnly, secure cookie (use `jose` with `SESSION_SECRET`). Cookie lasts 30 days.
-- Next.js middleware protects everything except `/login`, `/demo`, `/design`, static assets.
+- Next.js proxy (`proxy.ts`, the Next 16 name for middleware) protects everything except `/login`, `/demo`, `/design`, static assets. API routes and the app layout also check the session themselves.
 - Simple login rate limit (in-memory is fine for one user): 5 attempts per 10 minutes per IP.
 - `NOTION_TOKEN` is only read in server code. Never import the Notion client in a client component. Never return the token or raw Notion errors to the browser.
 - Add `.env.example` with placeholder values and `.env.local` to `.gitignore` before the first commit.
@@ -236,7 +236,7 @@ meorisok/
     demoData.ts
     session.ts
   components/
-  middleware.ts
+  proxy.ts                  # Next 16 name for middleware.ts
 ```
 
 ---

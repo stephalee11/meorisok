@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { hasSession } from "@/lib/auth";
 import { describe, updateStatus, WriteError } from "@/lib/notion";
 import { isStatusKey } from "@/lib/status";
 
@@ -7,6 +8,7 @@ const ERROR = "couldn't reach notion. try again in a sec.";
 
 /** PATCH { sourceId, status } -> sets the page's Notion status. Only status is writable. */
 export async function PATCH(req: NextRequest, ctx: RouteContext<"/api/tasks/[id]/status">) {
+  if (!(await hasSession())) return NextResponse.json({ error: "log in first." }, { status: 401 });
   const { id } = await ctx.params;
   const body = (await req.json().catch(() => null)) as { sourceId?: unknown; status?: unknown } | null;
 
