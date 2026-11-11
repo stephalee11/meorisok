@@ -4,7 +4,7 @@ import { use, useState } from "react";
 import { browser } from "react-dom";
 import { toISODate } from "@/lib/dates";
 import { SOURCE_META } from "@/lib/sources";
-import type { TasksPayload } from "@/lib/types";
+import type { StatusKey, Task, TasksPayload } from "@/lib/types";
 import { AppShell } from "./AppShell";
 import { TasksProvider } from "./TasksContext";
 import { ToastProvider } from "./Toast";
@@ -12,6 +12,16 @@ import { ToastProvider } from "./Toast";
 async function reload(): Promise<TasksPayload> {
   const res = await fetch("/api/tasks?refresh=1", { method: "POST" });
   if (!res.ok) throw new Error(`refresh failed: ${res.status}`);
+  return res.json();
+}
+
+async function write(task: Task, next: StatusKey): Promise<Partial<Task>> {
+  const res = await fetch(`/api/tasks/${task.id}/status`, {
+    method: "PATCH",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ sourceId: task.sourceId, status: next }),
+  });
+  if (!res.ok) throw new Error(`status update failed: ${res.status}`);
   return res.json();
 }
 
@@ -32,6 +42,7 @@ export function LiveApp({ initial, children }: { initial: TasksPayload; children
         basePath=""
         mode="live"
         reload={reload}
+        write={write}
       >
         <AppShell>{children}</AppShell>
       </TasksProvider>

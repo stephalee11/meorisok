@@ -92,7 +92,8 @@ export function TaskTicket({ task, project, today, onStatusChange, landed, lifte
                 target="_blank"
                 rel="noreferrer"
                 className="text-inherit no-underline hover:underline"
-                {...stopDrag}
+                // Links still drag with mouse/touch; a click without moving opens Notion.
+                draggable={false}
               >
                 {task.title}
               </a>
