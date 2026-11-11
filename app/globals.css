@@ -36,25 +36,28 @@
   --ease-out: var(--ease-out);
 }
 
-html {
-  background: var(--cream-50);
-  color: var(--cocoa-900);
-}
+/* Base styles live in a layer so Tailwind utilities can override them. */
+@layer base {
+  html {
+    background: var(--cream-50);
+    color: var(--cocoa-900);
+  }
 
-body {
-  font-family: var(--font-nunito), ui-rounded, system-ui, sans-serif;
-  font-size: var(--text-md);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
+  body {
+    font-family: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+    font-size: var(--text-md);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
 
-:focus-visible {
-  outline: 2px solid var(--berry-600);
-  outline-offset: 2px;
-}
+  :focus-visible {
+    outline: 2px solid var(--berry-600);
+    outline-offset: 2px;
+  }
 
-a {
-  color: var(--berry-600);
+  a {
+    color: var(--berry-600);
+  }
 }
 
 /* Order ticket: receipt edge on top, notches on the sides.

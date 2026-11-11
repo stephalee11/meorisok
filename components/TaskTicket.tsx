@@ -82,7 +82,7 @@ export function TaskTicket({ task, project, today, onStatusChange, landed, lifte
             </span>
           )}
           <h3
-            className={`flex-1 min-w-0 text-md font-semibold leading-snug [overflow-wrap:anywhere] hyphens-auto ${
+            className={`flex-1 min-w-0 text-md font-semibold leading-snug [overflow-wrap:anywhere] ${
               done ? "text-cocoa-500 line-through decoration-cocoa-500/60" : "text-cocoa-900"
             }`}
           >
