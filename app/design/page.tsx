@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Mascot } from "@/components/Mascot";
 import { contrast } from "@/lib/contrast";
 import { COLORS, hex, RADII, SPACING, TEXT_PAIRS, TYPE_SCALE } from "@/lib/tokens";
+import { ComponentsShowcase } from "./ComponentsShowcase";
 import { Section } from "./Section";
 
 export const metadata: Metadata = {
@@ -199,7 +200,7 @@ export default function DesignPage() {
         </div>
       </Section>
 
-      {/* components section */}
+      <ComponentsShowcase />
     </div>
   );
 }
