@@ -29,7 +29,7 @@ export const TEXT_PAIRS: { fg: ColorToken; bg: ColorToken; where: string }[] = [
   { fg: "cocoa-900", bg: "matcha-400", where: "matcha project chip" },
   { fg: "cocoa-900", bg: "butter-300", where: "butter chip, late marker" },
   { fg: "cocoa-900", bg: "sky-300", where: "sky project chip" },
-  { fg: "cocoa-700", bg: "milk-pink-100", where: "phase chip, headings on pink" },
+  { fg: "cocoa-700", bg: "milk-pink-100", where: "headings on pink" },
   { fg: "cocoa-700", bg: "milk-pink-300", where: "headings on pink" },
   { fg: "cocoa-700", bg: "cream-100", where: "status menu button" },
   { fg: "cocoa-500", bg: "cream-50", where: "secondary text on page" },
@@ -47,7 +47,7 @@ export const TYPE_SCALE = [
   { px: 20, token: "lg", font: "display", sample: "tomorrow" },
   { px: 16, token: "md", font: "sans", sample: "Outline chapter 3" },
   { px: 14, token: "sm", font: "sans", sample: "updated 2 min ago" },
-  { px: 12, token: "xs", font: "sans", sample: "late · P1 · Research" },
+  { px: 12, token: "xs", font: "sans", sample: "late · P1" },
 ] as const;
 
 export const SPACING = [4, 8, 12, 16, 24, 32, 48];

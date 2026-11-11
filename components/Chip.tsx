@@ -33,10 +33,6 @@ export function PriorityChip({ priority }: { priority: Priority }) {
   );
 }
 
-export function PhaseChip({ phase }: { phase: string }) {
-  return <span className={`${base} bg-milk-pink-100 text-cocoa-700`}>{phase}</span>;
-}
-
 /** Toggle chip for filters. Uses aria-pressed. */
 export function FilterChip({
   pressed,

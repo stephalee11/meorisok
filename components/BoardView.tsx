@@ -72,7 +72,9 @@ const columnJump: KeyboardCoordinateGetter = (event, { context, currentCoordinat
 };
 
 export function BoardView() {
-  const { tasks, sources, today, setStatus, landed } = useTasks();
+  const { tasks: allTasks, sources, today, setStatus, landed } = useTasks();
+  // The board is just my tickets.
+  const tasks = allTasks.filter((t) => t.mine);
   const [filters, setFilters] = useFilters();
   const [showAll, setShowAll] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -113,7 +115,7 @@ export function BoardView() {
   return (
     <section aria-labelledby="view-title">
       <div id="view-title">
-        <ViewHeader title="board" subtitle="drag a ticket to move it" />
+        <ViewHeader title="board" subtitle="your tickets. drag one to move it" />
       </div>
       {tasks.length > 0 && (
         <div className="mb-6">

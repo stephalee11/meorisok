@@ -11,6 +11,7 @@ export type Task = {
   priority?: Priority;
   phase?: string;
   url: string; // link back to the Notion page
+  mine: boolean; // assigned to me (or the source has no assignee column)
   editedAt: string; // ISO datetime (Notion last_edited_time), used for the Enjoyed 14-day window
 };
 

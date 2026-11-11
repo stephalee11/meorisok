@@ -6,7 +6,7 @@ import type { SourceMeta } from "@/lib/sources";
 import { stopDrag } from "@/lib/stopDrag";
 import type { StatusKey, Task } from "@/lib/types";
 import { isLate } from "@/lib/views";
-import { PhaseChip, PriorityChip, ProjectChip } from "./Chip";
+import { PriorityChip, ProjectChip } from "./Chip";
 
 type Props = {
   task: Task;
@@ -120,7 +120,6 @@ export function TaskTicket({ task, project, today, onStatusChange, landed, lifte
             </span>
           )}
           {task.priority && <PriorityChip priority={task.priority} />}
-          {task.phase && <PhaseChip phase={task.phase} />}
         </div>
       </article>
     </div>

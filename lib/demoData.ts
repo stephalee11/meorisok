@@ -56,6 +56,7 @@ export function makeDemoTasks(today: string): Task[] {
     priority: extra.priority,
     phase: extra.phase,
     url: "#",
+    mine: true,
     editedAt: `${addDays(today, -(extra.editedDaysAgo ?? 1))}T12:00:00.000Z`,
   }));
 }

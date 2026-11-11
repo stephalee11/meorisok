@@ -3,7 +3,7 @@
 import { Suspense, useState } from "react";
 import { BoardColumn } from "@/components/BoardColumn";
 import { Button } from "@/components/Button";
-import { FilterChip, PhaseChip, PriorityChip, ProjectChip } from "@/components/Chip";
+import { FilterChip, PriorityChip, ProjectChip } from "@/components/Chip";
 import { EmptyState } from "@/components/EmptyState";
 import { FilterBar } from "@/components/FilterBar";
 import { LoginCard } from "@/components/LoginCard";
@@ -32,6 +32,7 @@ const SAMPLES: Task[] = [
     priority: "P1",
     phase: "Research",
     url: "#",
+    mine: true,
     editedAt: "2026-03-11T10:00:00Z",
   },
   {
@@ -42,6 +43,7 @@ const SAMPLES: Task[] = [
     notionStatusName: "Doing",
     due: "2026-03-13",
     url: "#",
+    mine: true,
     editedAt: "2026-03-11T10:00:00Z",
   },
   {
@@ -52,6 +54,7 @@ const SAMPLES: Task[] = [
     notionStatusName: "Done",
     due: null,
     url: "#",
+    mine: true,
     editedAt: "2026-03-11T10:00:00Z",
   },
 ];
@@ -78,15 +81,13 @@ export function ComponentsShowcase() {
           <Button disabled>disabled</Button>
         </Specimen>
 
-        <Specimen label="chip: project, priority, phase">
+        <Specimen label="chip: project, priority">
           {DEMO_SOURCES.map((s) => (
             <ProjectChip key={s.id} label={s.label} color={s.color} />
           ))}
           <PriorityChip priority="P1" />
           <PriorityChip priority="P2" />
           <PriorityChip priority="P3" />
-          <PhaseChip phase="Research" />
-          <PhaseChip phase="Build" />
         </Specimen>
 
         <Specimen label="filter chip (toggle)">

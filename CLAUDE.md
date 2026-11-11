@@ -45,7 +45,7 @@ Status names are a display layer only. Notion keeps its own labels.
 | `doing` | Brewing | Doing | In progress now |
 | `done` | Enjoyed | Done | Finished |
 
-Each task renders as a small **order ticket** card: title, project chip, due date, optional priority dot and phase tag.
+Each task renders as a small **order ticket** card: title, project chip, due date, optional priority dot. (Phase is read but not shown.)
 
 Projects are "tabs" or "menus" in the UI copy where it fits, but keep the word "project" in filters for clarity.
 
@@ -115,9 +115,9 @@ Handle pagination (databases can exceed 100 rows). Unknown status labels fall ba
 ## Features
 
 ### Views (top-level tabs)
-1. **Today**: tasks that are Brewing, due today, or overdue (not Enjoyed). Overdue tasks get a small "late" marker. Sort by due date, then priority.
+1. **Today**: tasks due today or overdue, plus Brewing tasks with no due date (not Enjoyed). A Brewing task due later does not show here. Overdue tasks get a small "late" marker. Sort by due date, then priority.
 2. **This Week**: Order Up tasks plus anything due in the next 7 days. Group by day.
-3. **Board**: four columns (Menu, Order Up, Brewing, Enjoyed) combining all projects. Enjoyed column shows only the last 14 days by default, with a toggle for all.
+3. **Board**: four columns (Menu, Order Up, Brewing, Enjoyed) combining all projects, showing only tasks assigned to me (`me.notionUserId` in the config, matched against each source's `assignee` people column; unassigned tasks are hidden). Enjoyed column shows only the last 14 days by default, with a toggle for all.
 
 ### Filters (persist in URL query params)
 - Project chips (multi-select, uses the color for each source)

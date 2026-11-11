@@ -8,6 +8,7 @@ export type SourceProps = {
   title: string;
   status: string;
   due: string;
+  assignee?: string;
   priority?: string;
   phase?: string;
 };
@@ -20,6 +21,7 @@ type NotionProp =
   | { type: "status"; status: { name: string } | null }
   | { type: "select"; select: { name: string } | null }
   | { type: "date"; date: { start: string } | null }
+  | { type: "people"; people: { id: string }[] }
   | { type: string; [k: string]: unknown };
 
 export type NotionPageLike = {
@@ -71,12 +73,26 @@ function dateStart(p: NotionProp | undefined): string | null {
   return start ? start.slice(0, 10) : null;
 }
 
+const bareId = (id: string) => id.replace(/-/g, "").toLowerCase();
+
+/** True if `meId` is among the people. Sources without an assignee column count as mine. */
+function isMine(p: NotionProp | undefined, hasColumn: boolean, meId: string | undefined): boolean {
+  if (!hasColumn || !meId) return true;
+  if (!p || p.type !== "people" || !Array.isArray(p.people)) return false;
+  return (p.people as { id: string }[]).some((x) => bareId(x.id) === bareId(meId));
+}
+
 function priority(p: NotionProp | undefined): Priority | undefined {
   const v = text(p)?.trim().toUpperCase();
   return v === "P1" || v === "P2" || v === "P3" ? v : undefined;
 }
 
-export function normalizePage(page: NotionPageLike, source: NormalizeSource, warn: Warn = defaultWarn): Task {
+export function normalizePage(
+  page: NotionPageLike,
+  source: NormalizeSource,
+  warn: Warn = defaultWarn,
+  meId?: string,
+): Task {
   const props = page.properties ?? {};
   const statusName = text(props[source.props.status]) ?? "";
   const phase = source.props.phase ? text(props[source.props.phase])?.trim() : undefined;
@@ -90,10 +106,16 @@ export function normalizePage(page: NotionPageLike, source: NormalizeSource, war
     priority: source.props.priority ? priority(props[source.props.priority]) : undefined,
     phase: phase || undefined,
     url: page.url,
+    mine: isMine(source.props.assignee ? props[source.props.assignee] : undefined, !!source.props.assignee, meId),
     editedAt: page.last_edited_time,
   };
 }
 
-export function normalizePages(pages: NotionPageLike[], source: NormalizeSource, warn: Warn = defaultWarn): Task[] {
-  return pages.filter((p) => !p.in_trash && !p.archived).map((p) => normalizePage(p, source, warn));
+export function normalizePages(
+  pages: NotionPageLike[],
+  source: NormalizeSource,
+  warn: Warn = defaultWarn,
+  meId?: string,
+): Task[] {
+  return pages.filter((p) => !p.in_trash && !p.archived).map((p) => normalizePage(p, source, warn, meId));
 }

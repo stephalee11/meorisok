@@ -20,10 +20,12 @@ export function byDueThenPriority(a: Task, b: Task): number {
   return a.title.localeCompare(b.title);
 }
 
-/** Brewing, due today, or overdue. Never Enjoyed. */
+/** Due today or overdue, plus Brewing tickets with no due date. Never Enjoyed. */
 export function todayTasks(tasks: Task[], today: string): Task[] {
   return tasks
-    .filter((t) => t.status !== "done" && (t.status === "doing" || (t.due !== null && t.due <= today)))
+    .filter(
+      (t) => t.status !== "done" && (t.due !== null ? t.due <= today : t.status === "doing"),
+    )
     .sort(byDueThenPriority);
 }
 

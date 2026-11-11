@@ -2,7 +2,7 @@ import "server-only";
 
 import { Client, collectPaginatedAPI, isFullPage } from "@notionhq/client";
 import { cacheLife, cacheTag, revalidateTag } from "next/cache";
-import { sources } from "@/meorisok.config";
+import { me, sources } from "@/meorisok.config";
 import { normalizePages, notionLabelFor, type NotionPageLike, type SourceProps } from "./normalize";
 import type { StatusKey, Task, TasksPayload } from "./types";
 
@@ -37,7 +37,7 @@ async function fetchSource(source: Source) {
     data_source_id: source.dataSourceId,
   });
   const full = pages.filter(isFullPage) as unknown as NotionPageLike[];
-  return normalizePages(full, { id: source.id, props: propsOf(source) });
+  return normalizePages(full, { id: source.id, props: propsOf(source) }, undefined, me.notionUserId);
 }
 
 /** One failing source never breaks the others. Errors are logged here and never sent to the browser. */
