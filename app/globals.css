@@ -1,1 +1,142 @@
 @import "tailwindcss";
+@import "./tokens.css";
+
+@theme inline {
+  --color-cream-50: var(--cream-50);
+  --color-cream-100: var(--cream-100);
+  --color-cream-200: var(--cream-200);
+  --color-milk-pink-100: var(--milk-pink-100);
+  --color-milk-pink-300: var(--milk-pink-300);
+  --color-milk-pink-500: var(--milk-pink-500);
+  --color-berry-600: var(--berry-600);
+  --color-cocoa-900: var(--cocoa-900);
+  --color-cocoa-700: var(--cocoa-700);
+  --color-cocoa-500: var(--cocoa-500);
+  --color-matcha-400: var(--matcha-400);
+  --color-butter-300: var(--butter-300);
+  --color-sky-300: var(--sky-300);
+
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+
+  --text-xs: var(--text-xs);
+  --text-sm: var(--text-sm);
+  --text-md: var(--text-md);
+  --text-lg: var(--text-lg);
+  --text-xl: var(--text-xl);
+  --text-2xl: var(--text-2xl);
+
+  --radius-card: var(--radius-card);
+  --radius-panel: var(--radius-panel);
+  --radius-pill: var(--radius-pill);
+
+  --shadow-sticker: var(--shadow-sticker);
+  --shadow-lift: var(--shadow-lift);
+
+  --ease-out: var(--ease-out);
+}
+
+html {
+  background: var(--cream-50);
+  color: var(--cocoa-900);
+}
+
+body {
+  font-family: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+  font-size: var(--text-md);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--berry-600);
+  outline-offset: 2px;
+}
+
+a {
+  color: var(--berry-600);
+}
+
+/* Order ticket: receipt edge on top, notches on the sides.
+   The mask would clip a box-shadow, so the shadow lives on a wrapper
+   as drop-shadow, which follows the notched shape. */
+.ticket-wrap {
+  filter: drop-shadow(0 2px 0 var(--cream-200)) drop-shadow(0 4px 6px rgb(59 38 34 / 0.08));
+  transition: filter var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.ticket-wrap[data-lifted="true"] {
+  filter: drop-shadow(0 2px 0 var(--cream-200)) drop-shadow(0 12px 16px rgb(59 38 34 / 0.2));
+  transform: rotate(-1.5deg) scale(1.02);
+}
+.ticket {
+  position: relative;
+  background: var(--cream-100);
+  border-radius: var(--radius-card);
+  -webkit-mask:
+    radial-gradient(circle 6px at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 6px at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat;
+  mask:
+    radial-gradient(circle 6px at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle 6px at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat;
+}
+.ticket::before {
+  content: "";
+  position: absolute;
+  inset: 0 12px auto;
+  border-top: 2px dashed var(--cream-200);
+  top: 6px;
+}
+
+@keyframes happy-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-6px) rotate(-4deg);
+  }
+  60% {
+    transform: translateY(0) rotate(3deg);
+  }
+}
+.animate-happy {
+  animation: happy-bounce 600ms var(--ease-out);
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -200px 0;
+  }
+  to {
+    background-position: 200px 0;
+  }
+}
+.skeleton-bar {
+  background: linear-gradient(90deg, var(--cream-200) 0%, var(--cream-50) 50%, var(--cream-200) 100%);
+  background-size: 400px 100%;
+  animation: shimmer 1.2s linear infinite;
+}
+
+@keyframes toast-in {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.animate-toast {
+  animation: toast-in var(--dur-base) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

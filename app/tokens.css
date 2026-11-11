@@ -1,0 +1,60 @@
+/*
+ * meorisok design tokens.
+ * Two hexes were darkened from the original spec to pass WCAG AA (4.5:1):
+ *   --cocoa-500  #8A6B63 -> #7A5C55  (secondary text on cream-100 / milk-pink-100)
+ *   --berry-600  #D2587E -> #B43F66  (link text on cream-50 / cream-100)
+ * Full table lives on /design.
+ */
+:root {
+  /* color */
+  --cream-50: #fff9f3;
+  --cream-100: #fff1e6;
+  --cream-200: #f6e3d3;
+  --milk-pink-100: #ffe3ea;
+  --milk-pink-300: #ffb8ca;
+  --milk-pink-500: #f28aa6;
+  --berry-600: #b43f66;
+  --cocoa-900: #3b2622;
+  --cocoa-700: #5b3f39;
+  --cocoa-500: #7a5c55;
+  --matcha-400: #a9c9a4;
+  --butter-300: #f7dc9a;
+  --sky-300: #b9d8ec;
+
+  /* project colors (fill behind cocoa-900 text) */
+  --project-berry: var(--milk-pink-300);
+  --project-matcha: var(--matcha-400);
+  --project-butter: var(--butter-300);
+  --project-sky: var(--sky-300);
+
+  /* type scale */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 20px;
+  --text-xl: 28px;
+  --text-2xl: 40px;
+
+  /* radius */
+  --radius-card: 12px;
+  --radius-panel: 20px;
+  --radius-pill: 999px;
+
+  /* space (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+
+  /* shadow: flat, sticker-like */
+  --shadow-sticker: 0 2px 0 var(--cream-200), 0 6px 14px -8px rgb(59 38 34 / 0.18);
+  --shadow-lift: 0 2px 0 var(--cream-200), 0 14px 24px -10px rgb(59 38 34 / 0.28);
+
+  /* motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+}
