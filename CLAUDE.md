@@ -108,6 +108,8 @@ type Task = {
 };
 ```
 
+Only my tasks are kept, in every view: `me.notionUserId` in the config is matched against each source's `assignee` people column (shared tasks count, unassigned ones are dropped). The filter runs on the server, so other people's tasks never reach the browser.
+
 Handle pagination (databases can exceed 100 rows). Unknown status labels fall back to `backlog` and log a warning.
 
 ---
@@ -117,7 +119,7 @@ Handle pagination (databases can exceed 100 rows). Unknown status labels fall ba
 ### Views (top-level tabs)
 1. **Today**: tasks due today or overdue, plus Brewing tasks with no due date (not Enjoyed). A Brewing task due later does not show here. Overdue tasks get a small "late" marker. Sort by due date, then priority.
 2. **This Week**: Order Up tasks plus anything due in the next 7 days. Group by day.
-3. **Board**: four columns (Menu, Order Up, Brewing, Enjoyed) combining all projects, showing only tasks assigned to me (`me.notionUserId` in the config, matched against each source's `assignee` people column; unassigned tasks are hidden). Enjoyed column shows only the last 14 days by default, with a toggle for all.
+3. **Board**: four columns (Menu, Order Up, Brewing, Enjoyed) combining all projects. Enjoyed column shows only the last 14 days by default, with a toggle for all.
 
 ### Filters (persist in URL query params)
 - Project chips (multi-select, uses the color for each source)

@@ -72,9 +72,7 @@ const columnJump: KeyboardCoordinateGetter = (event, { context, currentCoordinat
 };
 
 export function BoardView() {
-  const { tasks: allTasks, sources, today, setStatus, landed } = useTasks();
-  // The board is just my tickets.
-  const tasks = allTasks.filter((t) => t.mine);
+  const { tasks, sources, today, setStatus, landed } = useTasks();
   const [filters, setFilters] = useFilters();
   const [showAll, setShowAll] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);

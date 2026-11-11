@@ -31,13 +31,16 @@ function propsOf(source: Source): SourceProps {
   return source.props as SourceProps;
 }
 
-/** All rows of one source. collectPaginatedAPI follows next_cursor past the 100-row page size. */
+/**
+ * All of my rows in one source. collectPaginatedAPI follows next_cursor past the 100-row page size.
+ * Tickets assigned only to other people are dropped here, so they never reach the browser.
+ */
 async function fetchSource(source: Source) {
   const pages = await collectPaginatedAPI(notion().dataSources.query, {
     data_source_id: source.dataSourceId,
   });
   const full = pages.filter(isFullPage) as unknown as NotionPageLike[];
-  return normalizePages(full, { id: source.id, props: propsOf(source) }, undefined, me.notionUserId);
+  return normalizePages(full, { id: source.id, props: propsOf(source) }, undefined, me.notionUserId).filter((t) => t.mine);
 }
 
 /** One failing source never breaks the others. Errors are logged here and never sent to the browser. */
